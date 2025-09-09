@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}Food Scan Now{% endblock %}</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+<style>
+.badge-high { background:#ffcdd2; color:#b71c1c; padding:0.15rem 0.4rem; border-radius:0.25rem; font-weight:600; }
+.badge-med { background:#fff9c4; color:#f57f17; padding:0.15rem 0.4rem; border-radius:0.25rem; font-weight:600; }
+.badge-low { background:#c8e6c9; color:#1b5e20; padding:0.15rem 0.4rem; border-radius:0.25rem; font-weight:600; }
+</style>
+</head>
+<body>
+<header class="container">
+  <nav>
+    <ul>
+      <li><strong>🍽️ Food Scan Now</strong></li>
+    </ul>
+    <ul>
+      {% if current_user.is_authenticated %}
+      <li><a href="{{ url_for('dashboard') }}">Dashboard</a></li>
+      <li><a href="{{ url_for('food_scan') }}">Food Scan</a></li>
+      <li><a href="{{ url_for('nutrition_history') }}">History</a></li>
+      <li><a href="{{ url_for('health_insights') }}">Insights</a></li>
+      <li><a href="{{ url_for('diet_goals') }}">Goals</a></li>
+      <li><a href="{{ url_for('profile') }}">Profile</a></li>
+      <li><a href="{{ url_for('settings') }}">Settings</a></li>
+      <li><a href="{{ url_for('logout') }}">Logout</a></li>
+      {% else %}
+      <li><a href="{{ url_for('login') }}">Login</a></li>
+      <li><a href="{{ url_for('register') }}">Register</a></li>
+      {% endif %}
+    </ul>
+  </nav>
+</header>
+
+<main class="container">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div>
+        {% for category, message in messages %}
+          <article class="{{ 'secondary' if category=='success' else '' }}">
+            <strong>{{ category|capitalize }}:</strong> {{ message }}
+          </article>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  {% block content %}{% endblock %}
+</main>
+
+<footer class="container">
+  <small>&copy; 2025 Food Scan Now</small>
+</footer>
+</body>
+</html>

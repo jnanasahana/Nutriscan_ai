@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Settings{% endblock %}
+{% block content %}
+<div class="settings-container">
+    <h1>Settings</h1>
+
+    <form id="settingsForm">
+      <!-- Profile Settings -->
+      <div class="setting-group">
+        <div class="setting-title">Profile</div>
+        <div class="setting-item">
+          <span>Manage Profile</span>
+          <a href="{{ url_for('profile') }}"><button type="button" class="btn">Go</button></a>
+        </div>
+
+      <!-- Notifications -->
+      <div class="setting-group">
+        <div class="setting-title">Notifications</div>
+        <div class="setting-item">
+          <span>Email Alerts</span>
+          <label class="toggle">
+            <input type="checkbox" id="emailAlerts" checked>
+            <span class="slider"></span>
+          </label>
+        </div>
+        <div class="setting-item">
+          <span>App Notifications</span>
+          <label class="toggle">
+            <input type="checkbox" id="appNotifications">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Appearance -->
+      <div class="setting-group">
+        <div class="setting-title">Appearance</div>
+        <div class="setting-item">
+          <span>Dark Mode</span>
+          <label class="toggle">
+            <input type="checkbox" id="darkModeToggle">
+            <span class="slider"></span>
+          </label>
+        </div>
+      </div>
+
+      <!-- Privacy -->
+      <div class="setting-group">
+        <div class="setting-title">Privacy & Security</div>
+        <div class="setting-item">
+          <span>Delete My Data</span>
+          <button type="button" class="btn btn-danger">Delete</button>
+        </div>
+      </div>
+
+      <!-- Save Button -->
+      <div style="text-align:center; margin-top:20px;">
+        <button type="submit" class="btn">Save Settings</button>
+      </div>
+    </form>
+  </div>
+
+  <!-- Change Password Modal -->
+  <div id="passwordModal" class="modal">
+    <div class="modal-content">
+      <h3>Change Password</h3>
+      <input type="password" id="currentPassword" placeholder="Current Password">
+      <input type="password" id="newPassword" placeholder="New Password">
+      <input type="password" id="confirmPassword" placeholder="Confirm New Password">
+      <div class="modal-buttons">
+        <button id="savePassword" class="btn">Save</button>
+        <button id="cancelPassword" class="btn btn-danger">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Success Modal -->
+  <div id="successModal" class="modal">
+    <div class="modal-content">
+      <h3>Settings Saved Successfully!</h3>
+      <div class="modal-buttons">
+        <a href="{{ url_for('dashboard') }}"><button class="btn">Go to Dashboard</button></a>
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

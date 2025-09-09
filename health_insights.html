@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Health Insights{% endblock %}
+
+{% block content %}
+<h2>
+    {% if current_user.is_authenticated %}
+        {{ current_user.username }}'s Health Insights
+    {% else %}
+        Sample Health Insights
+    {% endif %}
+</h2>
+
+<ul>
+  {% for i in health_insights %}
+    <li><strong>{{ i.title }}</strong>: {{ i.description }}</li>
+  {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}Nutrition History{% endblock %}
+
+{% block content %}
+<h2>{{ current_user.username }}'s Nutrition History</h2>
+
+<ul>
+  {% if history %}
+    {% for entry in history %}
+      <li>
+        <strong>{{ entry.analysis.productName }}</strong> - Scanned on {{ entry.timestamp.strftime('%Y-%m-%d %H:%M') }}
+        <br>Ingredients: {{ entry.analysis.ingredients|join(', ') }}
+        <br>Health Report: {{ entry.analysis.healthReport|safe }}
+      </li>
+    {% endfor %}
+  {% else %}
+    <li>No nutrition history found. Start scanning foods to track your nutrition!</li>
+  {% endif %}
+</ul>
+{% endblock %}

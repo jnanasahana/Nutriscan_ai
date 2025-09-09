@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}Profile{% endblock %}
+{% block content %}
+<h2>Profile</h2>
+<div class="profile-form">
+        <form id="profileForm">
+            <h3 class="section-title">Personal Information</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="first-name">First Name</label>
+                    <input type="text" id="first-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="last-name">Last Name</label>
+                    <input type="text" id="last-name" class="form-control" required>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dob">Date of Birth</label>
+                <input type="date" id="dob" class="form-control" required>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="gender">Gender</label>
+                    <select id="gender" class="form-control" required>
+                        <option value="">Select</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Other</option>
+                        <option value="prefer-not-to-say">Prefer not to say</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="blood-type">Blood Type</label>
+                    <select id="blood-type" class="form-control">
+                        <option value="">Unknown</option>
+                        <option value="A+">A+</option>
+                        <option value="A-">A-</option>
+                        <option value="B+">B+</option>
+                        <option value="B-">B-</option>
+                        <option value="AB+">AB+</option>
+                        <option value="AB-">AB-</option>
+                        <option value="O+">O+</option>
+                        <option value="O-">O-</option>
+                    </select>
+                </div>
+            </div>
+             <h3 class="section-title">Health Conditions</h3>
+            <div class="form-group">
+                <label>Do you have any of these conditions?</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-item"><input type="checkbox" id="diabetes" value="diabetes"><label for="diabetes">Diabetes</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="hypertension" value="hypertension"><label for="hypertension">Hypertension</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="heart-disease" value="heart-disease"><label for="heart-disease">Heart Disease</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="celiac" value="celiac"><label for="celiac">Celiac Disease</label></div>
+                    <div class="checkbox-item"><input type="checkbox" id="lactose" value="lactose"><label for="lactose">Lactose Intolerance</label></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="allergies">Food Allergies (comma separated)</label>
+                <input type="text" id="allergies" class="form-control" placeholder="e.g., peanuts, shellfish">
+            </div>
+
+            <div class="form-group">
+                <label for="medications">Current Medications</label>
+                <textarea id="medications" class="form-control" placeholder="List medications"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="dietary-preference">Dietary Preference</label>
+                <select id="dietary-preference" class="form-control">
+                    <option value="none">No specific diet</option>
+                    <option value="vegetarian">Vegetarian</option>
+                    <option value="vegan">Vegan</option>
+                    <option value="keto">Keto</option>
+                    <option value="paleo">Paleo</option>
+                    <option value="mediterranean">Mediterranean</option>
+                    <option value="low-carb">Low Carb</option>
+                    <option value="low-fat">Low Fat</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div id="submitButtonContainer">
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </div>
+
+
+{% endblock %}

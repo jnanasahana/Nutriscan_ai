@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h1>📊 Scan Result</h1>
+
+    <!-- Product Info -->
+    <h2>Product Info</h2>
+    <p><b>Name:</b> {{ product_info.name }}</p>
+    <p><b>Brand:</b> {{ product_info.brand }}</p>
+    <p><b>Overall Label:</b> {{ product_info.label }}</p>
+
+    <!-- Uploaded / Captured Image -->
+    <h2>🖼️ Uploaded Image</h2>
+    {% if image_file %}
+        <img src="{{ url_for('uploaded_file', filename=image_file) }}" width="300">
+    {% else %}
+        <p>No image available.</p>
+    {% endif %}
+
+    <!-- Ingredient Risk Analysis -->
+    <h2>🍏 Ingredient Risk Analysis</h2>
+    <ul>
+    {% for item in ingredient_impacts %}
+        <li>
+            {{ item.ingredient }}
+            <span class="{% if item.impact == 'High' %}impact-high{% elif item.impact == 'Moderate' %}impact-medium{% else %}impact-low{% endif %}">
+                {{ item.impact }} Risk
+            </span>
+        </li>
+    {% endfor %}
+    </ul>
+
+    <!-- Nutrition Info -->
+    <h2>🍏 Nutrition Info</h2>
+    {% if nutrition %}
+    <table border="1" cellpadding="5">
+        <tr><th>Nutrient</th><th>Value</th></tr>
+        {% for nutrient, value in nutrition.items() %}
+            <tr><td>{{ nutrient }}</td><td>{{ value }}</td></tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No nutrition info available.</p>
+    {% endif %}
+
+    <!-- Health Summary -->
+    <h2>Health Summary</h2>
+    {% if health_summary %}
+        <ul>
+        {% for item in health_summary %}
+            <li>{{ item }}</li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No health summary available.</p>
+    {% endif %}
+
+    <!-- Recommendations -->
+    <h2>Recommended Alternatives</h2>
+    {% if recommendations %}
+    <table border="1" cellpadding="5">
+        <tr>
+            <th>Product Name</th>
+            <th>Label</th>
+            <th>Calories</th>
+            <th>Protein (g)</th>
+            <th>Carbs (g)</th>
+            <th>Fat (g)</th>
+            <th>Sodium (mg)</th>
+            <th>Reason</th>
+            <th>Benefits</th>
+        </tr>
+        {% for rec in recommendations %}
+        <tr>
+            <td>{{ rec.name }}</td>
+            <td>{{ rec.label }}</td>
+            <td>{{ rec.calories }}</td>
+            <td>{{ rec.protein }}</td>
+            <td>{{ rec.carbs }}</td>
+            <td>{{ rec.fat }}</td>
+            <td>{{ rec.sodium }}</td>
+            <td>{{ rec.reason }}</td>
+            <td>{{ rec.benefits }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+        <p>No recommendations available.</p>
+    {% endif %}
+
+    <!-- PDF & New Scan Buttons -->
+    <button onclick="downloadPDF()">📄 Download Report</button>
+    <a href="{{ url_for('food_scan') }}"><button>🔄 New Scan</button></a>
+</div>
+
+<script>
+function downloadPDF(){
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    doc.setFontSize(18);
+    doc.text("Ingredient Analyzer Report", 10, 15);
+    doc.setFontSize(12);
+    doc.text("User: " + "{{ current_user.username }}", 10, 25);
+
+    doc.text("Detected Ingredients:", 10, 40);
+    let y=50;
+    {% for item in ingredient_impacts %}
+        doc.text("- {{ item.ingredient }} [{{ item.impact }} Risk]", 10, y);
+        y += 7;
+    {% endfor %}
+
+    y += 10;
+    doc.text("Recommendations:", 10, y);
+    y += 10;
+    {% for rec in recommendations %}
+        doc.text("- {{ rec.name }} ({{ rec.reason }})", 10, y);
+        y += 7;
+    {% endfor %}
+
+    doc.save("ingredient_report.pdf");
+}
+</script>
+{% endblock %}
